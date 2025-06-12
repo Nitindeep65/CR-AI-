@@ -19,21 +19,26 @@ const summaries = [
 
 const LatestSummaries = () => {
   return (
-    <section className="py-20 px-6 bg-gray-50">
-      <h3 className="text-3xl font-semibold text-center mb-10 text-gray-800">
+    <section className="py-24 px-4 sm:px-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <h3 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800 dark:text-white">
         Latest Customer Insights
       </h3>
-      <div className="max-w-4xl mx-auto space-y-6">
+
+      <div className="max-w-5xl mx-auto grid gap-8 md:grid-cols-2">
         {summaries.map((summary, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-xl shadow hover:shadow-md transition"
+            className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300"
           >
-            <div className="flex items-start gap-3">
-              <MessageSquareQuote className="h-6 w-6 text-blue-600 mt-1" />
+            <div className="flex items-start gap-4">
+              <MessageSquareQuote className="h-7 w-7 text-blue-600 dark:text-blue-400 mt-1 shrink-0" />
               <div>
-                <p className="text-gray-700 text-base">{summary.text}</p>
-                <p className="text-sm text-gray-400 mt-2">— {summary.source}</p>
+                <p className="text-gray-700 dark:text-gray-200 text-base leading-relaxed">
+                  {summary.text}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 italic">
+                  — {summary.source}
+                </p>
               </div>
             </div>
           </div>

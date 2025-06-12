@@ -3,6 +3,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { Sparkles } from "lucide-react";
 
 export default function SubmitReviewPage() {
   const [review, setReview] = useState("");
@@ -48,7 +49,7 @@ export default function SubmitReviewPage() {
   }, [aiSummary]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-12">
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-4 text-center">
           Submit a Review
@@ -88,10 +89,17 @@ export default function SubmitReviewPage() {
         {aiSummary && (
           <div
             ref={summaryRef}
-            className="mt-6 p-4 border rounded bg-gray-100 dark:bg-gray-700 dark:text-white transition-all duration-300"
+            className="mt-8 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-700 dark:to-gray-800 border-l-4 border-blue-500 dark:border-blue-400 rounded-xl p-6 shadow-md transition-all duration-300"
           >
-            <h3 className="text-xl font-semibold mb-2">AI Summary:</h3>
-            <p className="text-lg leading-relaxed">{aiSummary}</p>
+            <div className="flex items-center gap-3 mb-3">
+              <Sparkles className="text-blue-500 dark:text-blue-300 w-6 h-6" />
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                AI Summary
+              </h3>
+            </div>
+            <p className="text-gray-700 dark:text-gray-200 text-base leading-relaxed">
+              {aiSummary}
+            </p>
           </div>
         )}
       </div>
