@@ -1,21 +1,19 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isDark, setIsDark] = useState(false);
+  const { data: session } = useSession();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDark(dark);
-    }
-  }, []);
+  const handleLogout = () => {
+    signOut({ callbackUrl: "/" });
+  };
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md fixed top-0 w-full z-50 transition duration-300">
@@ -23,11 +21,13 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">SmartReview AI</h1>
+            <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+              SmartReview AI
+            </h1>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
               className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition"
@@ -40,17 +40,28 @@ const Navbar = () => {
             >
               Submit Review
             </Link>
-            <Link
-              href="/Signup"
-              className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition"
-            >
-              Sign Up
-            </Link>
+
+            {session && (
+              <>
+                <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  Hello, {session.user?.name}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm transition"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
 
           {/* Hamburger */}
           <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-gray-700 dark:text-gray-200 hover:text-blue-600">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-700 dark:text-gray-200 hover:text-blue-600"
+            >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -78,13 +89,23 @@ const Navbar = () => {
           >
             Submit Review
           </Link>
-          <Link
-            href="/Signup"
-            onClick={toggleMenu}
-            className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition"
-          >
-            Sign Up
-          </Link>
+
+          {session && (
+            <>
+              <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                Hello, {session.user?.name}
+              </span>
+              <button
+                onClick={() => {
+                  toggleMenu();
+                  handleLogout();
+                }}
+                className="text-red-500 hover:text-red-600 font-medium transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>
