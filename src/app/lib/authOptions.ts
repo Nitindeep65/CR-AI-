@@ -1,5 +1,6 @@
+// lib/authOptions.ts
 import GitHubProvider from "next-auth/providers/github";
-import { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -9,4 +10,8 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/", // Redirect to homepage or custom login
+  },
+  debug: true, // Helpful for debugging in dev/Vercel
 };
